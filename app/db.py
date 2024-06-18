@@ -37,8 +37,16 @@ def init_db():
 def init_db_command():
     """clear the existing data and create new tables."""
 
-    init_db()
-    click.echo("initialized the database.")
+    try:
+        click.echo("initialializing database...")
+        init_db()
+        click.echo("database initialized successfully.")
+    except Exception as e:
+        click.echo("there is an issue with initialization.")
+        raise
+        
+
+
 
 
 # registering with the app
