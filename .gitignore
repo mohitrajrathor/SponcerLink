@@ -1,4 +1,8 @@
-# folders to ignore
+# folders
 .idea/
 .venv/
 instance/
+
+
+# files
+app/templates/temp.html
