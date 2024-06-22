@@ -1,1 +1,1 @@
-# Influecncer Sponcership platform
+# SponcerLink - An Influecncer Sponcership platform
