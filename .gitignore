@@ -2,7 +2,7 @@
 .idea/
 .venv/
 instance/
-
+__pycache__/
 
 # files
 app/templates/temp.html
