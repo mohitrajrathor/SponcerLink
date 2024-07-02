@@ -1,41 +1,33 @@
 import os
 from flask import Flask
-from . import db
-from . import auth
+from flask import render_template
+from .models import db
 
 
-
-def create_app(test_config=None):
+def create_app():
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'db.sqlite'),
-    )
+    app = Flask(__name__)
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
+    app.config['SECRET_KEY'] = 'dev'
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite+pysqlite:///db.sqlite3"
 
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
+    db.init_app(app)
 
-    
-    # resgistering db functionality
-    db.init_app(app=app)
+    with app.app_context():
+        from .models import Admins
+        db.create_all()
+
+    print("database initialized")
 
     # registering auth.Auth blueprint to the app
-    app.register_blueprint(auth.Auth)
 
     # a simple page to check server status
     @app.route('/check')
     def message():
         return "<h1>Site is Live...</h1><p>this is demo paragraph</p>"
+
+    @app.route('/')
+    def home():
+        return render_template("pages/login.html")
 
     return app
