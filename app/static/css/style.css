@@ -1,0 +1,38 @@
+/* Glow effect for nav-items */
+.nav-item .nav-link {
+    position: relative;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.nav-item .nav-link:hover {
+    color: #1900ff;
+    /* Change to desired hover text color */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 16px rgba(255, 255, 255, 0.6);
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: black;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-link:hover::before {
+    visibility: visible;
+    width: 100%;
+    left: 0;
+}
+
+
+.login-container {
+    max-width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
