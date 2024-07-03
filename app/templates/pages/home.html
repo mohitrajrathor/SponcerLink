@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - SponcerLink{% endblock title %}
+
+{% block navLinks %}
+    <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#about">About</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#contact">Contact</a>
+    </li>
+{% endblock navLinks %}
+
+{% block main %}
+<header class="landing">
+    <div class="container-fluid h-100" style="background: rgba(0, 0, 0, 0.5);">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="text-white">Welcome to SponcerLink!</h1>
+                <p class="lead text-white">The Ultimate Sponsorship Platform Connecting Influencers with Brands</p>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Get Started</a>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock main %}
