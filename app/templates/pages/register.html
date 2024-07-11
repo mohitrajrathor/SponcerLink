@@ -1,49 +1,217 @@
-{% extends 'base.html' %}
-
-{% block authLinks %}
+{% extends 'base.html' %} {% block authLinks %}
 <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Login</a>
-{% endblock authLinks %}
-
-
-{% block main %}
+{% endblock authLinks %} {% block main %}
+<div>
+  
+</div>
 <section id="login-form" class="container-lg" style="height: 100vh">
   <div class="d-flex justify-content-center py-4">
     <div class="login-container px-5">
-      <h2 class="text-center mb-4">Login</h2>
-      <form action="">
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            name="email"
-            id="email"
-            aria-describedby="emailHelpId"
-            placeholder="abc@mail.com"
-          />
-          <small id="emailHelpId" class="form-text text-muted"
-            >Login with email</small
+      <h2 class="text-center mb-4">Register</h2>
+      <!-- Nav tabs -->
+      <ul
+        class="nav nav-tabs d-flex justify-content-evenly"
+        id="userType"
+        role="tablist"
+      >
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="admin-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#admin-form"
+            type="button"
+            role="tab"
+            aria-controls="home"
+            aria-selected="true"
           >
-        </div>
+            Admin
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="influencer-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#influencer-form"
+            type="button"
+            role="tab"
+            aria-controls="profile"
+            aria-selected="false"
+          >
+            Influencer
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="sponcer-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#sponcer-form"
+            type="button"
+            role="tab"
+            aria-controls="messages"
+            aria-selected="false"
+          >
+            Sponcer
+          </button>
+        </li>
+      </ul>
 
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            id="password"
-            placeholder=""
-          />
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div
+          class="tab-pane active py-3"
+          id="admin-form"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+        <!-- form for admin -->
+          <form action="{{ url_for('auth.register') }}" method="POST">
+            <div class="mb-3">
+              <label for="email" class="form-label">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                name="username"
+                id="username"
+                aria-describedby="textId"
+                placeholder="abc"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                id="email"
+                aria-describedby="emailHelpId"
+                placeholder="abc@mail.com"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="password"
+                placeholder=""
+              />
+            </div>
+
+            <div class="form-check hidden">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="usertype"
+                id="usertype"
+                value="admin"
+                checked
+                hidden
+              />
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <p class="text-center py-3" for="registration">
+              Already registered then
+              <a href="{{ url_for('auth.login') }}">Login.</a>.
+            </p>
+          </form>
         </div>
-        <div class="d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary">Submit</button>
+        <!-- influencer form -->
+        <div
+          class="tab-pane"
+          id="influencer-form"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+        >
+          <!-- form for influencer -->
+          <form action="{{ url_for('auth.register') }}" method="POST">
+            <div class="mb-3">
+              <label for="email" class="form-label">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                name="username"
+                id="username"
+                aria-describedby="textId"
+                placeholder="Username"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+                aria-describedby="textId"
+                placeholder="Name"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                id="email"
+                aria-describedby="emailHelpId"
+                placeholder="abc@mail.com"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="password"
+                placeholder=""
+              />
+            </div>
+
+            <div class="form-check hidden">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="usertype"
+                id="usertype"
+                value="influencer"
+                checked
+                hidden
+              />
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <p class="text-center py-3" for="registration">
+              Already registered then
+              <a href="{{ url_for('auth.login') }}">Login.</a>.
+            </p>
+          </form>
         </div>
-        <p class="text-center py-3" for="registration">
-          Already a member 
-          <a href="{{ url_for('auth.register') }}">Login</a>.
-        </p>
-      </form>
+        <!-- sponcer form -->
+        <div
+          class="tab-pane"
+          id="sponcer-form"
+          role="tabpanel"
+          aria-labelledby="messages-tab"
+        >
+        <!-- form for sponcers -->
+          messages
+        </div>
+      </div>
     </div>
   </div>
 </section>
