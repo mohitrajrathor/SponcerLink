@@ -1,9 +1,19 @@
-{% extends 'base.html' %} {% block title %}{{usename}} - Dashboard |
-SponcerLink{% endblock title %} {% block navLinks %}
+{% extends 'base.html' %} {% block title %}
+{{usename}} - Dashboard | SponcerLink{% endblock title %} 
+
+{% block navLinks %}
 <li class="nav-item">
   <a class="nav-link" href="{{ url_for('home') }}">Home</a>
 </li>
-<li class="nav-item">
+<li class="nav-item active">
   <a class="nav-link" href="#">Dashboard</a>
 </li>
 {% endblock navLinks %}
+
+{% block authLinks %}
+  <a class="btn btn-outline-primary me-2" href="{{ url_for('auth.logout') }}">Logout</a>
+{% endblock authLinks %}
+
+{% block main %}
+	<h1 class="text-center">Admin Dashboard</h1>
+{% endblock main %}

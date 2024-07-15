@@ -15,21 +15,34 @@
 {% endblock navLinks %}
 
 {% block main %}
-<header class="landing">
+<main>
+<div class="landing">
     <div class="container-fluid h-100" style="background: rgba(0, 0, 0, 0.5);">
         <div class="row h-100 align-items-center">
             <div class="col-12 text-center">
                 <h1 class="text-white">Welcome to SponcerLink!</h1>
                 <p class="lead text-white">The Ultimate Sponsorship Platform Connecting Influencers with Brands</p>
-                <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Get Started</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Join Now</a>
             </div>
         </div>
     </div>
-</header>
+</div>
 
-<main>
-    <div id="about">
-        <h1 class="text-center">About</h1>
+<div id="join">
+    <div class="join-block d-flex justify-content-evenly">
+        <!-- sponcer card -->
+        <div class="card">
+            Sponcer
+        </div>
+        <div class="card">
+            Influencer
+        </div>
+        
     </div>
+</div>
+
+<div id="about">
+    <h1 class="text-center">About</h1>
+</div>
 </main>
 {% endblock main %}
