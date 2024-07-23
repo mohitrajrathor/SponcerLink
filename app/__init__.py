@@ -32,6 +32,11 @@ def create_app():
     def check():
         return "<h1>Site is Live...</h1>"
 
+
+    @app.route('/404')
+    def _404():
+        return render_template('pnf.html')
+
     @app.route('/')
     def home():
         return render_template("pages/home.html")
