@@ -141,7 +141,11 @@ def login(usertype):
             try:
                 user = Influencers.query.filter_by(email=request.form['email']).first()
                 if check_password_hash(user.password, request.form['password']):
+                    session['usertype'] = 'sponcer'
+                    session['username'] = user.username
+                    session['id'] = user.id
                     return redirect(next_url or url_for('influencer.dashboard', username=user.username))
+                
             except Exception as e:
                 print(e)
                 db.session.rollback()
