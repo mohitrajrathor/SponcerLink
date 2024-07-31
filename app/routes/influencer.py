@@ -4,5 +4,3 @@ from .auth import specific_login_required
 
 
 influencer = Blueprint('influencer', __name__, url_prefix='/influencer')
-
-
