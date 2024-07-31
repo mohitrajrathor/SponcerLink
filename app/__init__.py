@@ -22,10 +22,11 @@ def create_app():
     print("database initialized")
 
     # registering auth.auth_ blueprint to the app
-    from .routes import auth, admin, sponcer
+    from .routes import auth, admin, sponcer, influencer
     app.register_blueprint(auth.auth_)
     app.register_blueprint(admin.admin)
     app.register_blueprint(sponcer.sponcer)
+    app.register_blueprint(influencer.influencer)
     
 
 
