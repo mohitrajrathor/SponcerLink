@@ -1,7 +1,10 @@
 import sqlite3
 import os
+import datetime as dt
+from werkzeug.security import generate_password_hash
 
-# Define the list of industries with their names and descriptions
+
+# list of industries with their names and descriptions
 industries = [
     ("Individual", "Type for individual category."),
     ("Fashion and Beauty", "Brands showcase products, trends, and styles through influencers."),
@@ -22,6 +25,22 @@ industries = [
     ("Other", "Industry not listed.")
 ]
 
+# list of sponcers for demo purpose
+joined_time = str(dt.datetime.now().timestamp())
+
+sponcers = [
+    ('raj', 'raj sahu', None, 1, 'raj@abc.com', None, generate_password_hash('123456789'), joined_time),
+    ('akash', 'akash', None, 1, 'akash@abc.com', None, generate_password_hash('10101010'), joined_time),
+    ('rohan', 'rohan', 'Agrotech', 5, 'rohan@agrotech.com', 'agrotech.com', generate_password_hash('abc'), joined_time),
+    ('tripti', 'tripti', 'beatutify', 2, 'tripti@beautify.com', 'beautify.com', generate_password_hash('xyz'), joined_time)
+]
+
+
+# list of influecners for demo purpose
+influecers = [
+    ('')
+]
+
 path = os.path.join("instance", 'db.sqlite3')
 
 # Connect to SQLite database (create it if not exists)
@@ -37,11 +56,21 @@ cursor.execute('''
     )
 ''')
 
+
+# insert data into sponcer table
+cursor.executemany('''
+    INSERT INTO sponcers (username, name, company, ind_id, email, website, password, joined_time)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+''', sponcers)
+
+
+
 # Insert data into the industries table
 cursor.executemany('''
     INSERT INTO industries (title, description)
     VALUES (?, ?)
 ''', industries)
+
 
 # Commit changes and close connection
 conn.commit()

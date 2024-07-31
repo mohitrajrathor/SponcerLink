@@ -2,16 +2,32 @@
 
 {% block title %}Login - SponcerLink{% endblock title %}
 
+{% block navLinks %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+</li>
+{% endblock navLinks %}
+
 {% block authLinks %}
-<a class="btn btn-primary" href="{{ url_for('auth.register', user='{{ user }}') }}">Register</a>
+<a class="btn btn-primary" href="{{ url_for('auth.register', usertype='influencer') }}">Register</a>
+<div class="dropdown mx-2">
+<a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Sponcer
+</a>
+
+<ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{{ url_for('auth.login', usertype='sponcer') }}">Login</a></li>
+    <li><a class="dropdown-item" href="{{ url_for('auth.register', usertype='sponcer') }}">Register</a></li>
+</ul>
+</div>
 {% endblock authLinks %}
 
 {% block main %}
 <section id="login-form" class="container-lg" style="height: 100vh">
   <div class="d-flex justify-content-center py-4">
     <div class="login-container px-5">
-      <h2 class="text-center mb-4">Login</h2>
-      <form action="{{ url_for('auth.login') }}" method="POST">
+      <h2 class="text-center mb-4">Login - influencer</h2>
+      <form action="{{ url_for('auth.login', usertype='influencer') }}" method="POST">
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input
@@ -38,28 +54,15 @@
             placeholder=""
             required
           />
-        </div>
-        <div class="mb-3">
-          <label for="user-type" class="form-label">User</label>
-          <select
-            class="form-select"
-            name="usertype"
-            id="usertype"
-          >
-            <option value="influencer" selected>Influencer</option>
-            <option value="sponcer">Sponcer</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-        
-
-        
+        </div>     
+  
         <div class="d-flex justify-content-center">
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+
         <p class="text-center py-3" for="registration">
           New to SponcerLink
-          <a href="{{ url_for('auth.register') }}">Register Yourself</a>.
+          <a href="{{ url_for('auth.register', usertype='influencer') }}">Register Yourself</a>.
         </p>
       </form>
     </div>

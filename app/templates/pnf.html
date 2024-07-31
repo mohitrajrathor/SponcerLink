@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block authLinks %}
+        {% if session.username %}
+        <a class="btn btn-outline-primary me-2" href="{{ url_for('auth.logout') }}">Logout</a>
+        {% else %}
+        <a class="btn btn-primary me-2" href="/#join">Join Us</a>
+        {% endif %}
+{% endblock authLinks %}
+
+{% block main %}
+<div class="position-relative h-75">
+    <h1 class="position-absolute top-50 start-50 translate-middle text-center">404 <br> 
+    Page Not Found
+    </h1>
+</div>
+{% endblock main %}

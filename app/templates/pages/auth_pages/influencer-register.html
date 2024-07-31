@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block navLinks %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+</li>
+{% endblock navLinks %}
+
+
+{% block authLinks %}
+<a class="btn btn-primary" href="{{ url_for('auth.login', usertype='influencer') }}">Login</a>
+<div class="dropdown mx-2">
+  <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Sponcer
+  </a>
+
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{{ url_for('auth.login', usertype='sponcer') }}">Login</a></li>
+    <li><a class="dropdown-item" href="{{ url_for('auth.register', usertype='sponcer') }}">Register</a></li>
+  </ul>
+</div>
+{% endblock authLinks %} 
+
+{% block main %}
+<div>
+  
+</div>
+<section id="login-form" class="container-lg" style="height: 100vh">
+  <div class="d-flex justify-content-center py-1">
+    <div class="login-container px-5">
+      <h2 class="text-center mb-4">Register - Influencer</h2>
+      <!-- Tab panes -->
+      <form action="{{ url_for('auth.register', usertype='influencer') }}" method="POST">
+        <div class="row">
+          <div class="mb-3 col">
+            <label for="email" class="form-label">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              id="username"
+              aria-describedby="textId"
+              placeholder="Username"
+              required
+            />
+          </div>
+  
+          <div class="mb-3 col">
+            <label for="email" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="name"
+              aria-describedby="textId"
+              placeholder="Name"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            id="email"
+            aria-describedby="emailHelpId"
+            placeholder="abc@mail.com"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            placeholder=""
+            required
+          />
+        </div>
+
+
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <p class="text-center py-3" for="registration">
+          Already registered then
+          <a href="{{ url_for('auth.login', usertype='influencer') }}">Login.</a>.
+        </p>
+      </form>
+
+    </div>
+  </div>
+</section>
+{% endblock main %}

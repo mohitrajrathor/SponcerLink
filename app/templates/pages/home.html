@@ -14,6 +14,15 @@
     </li>
 {% endblock navLinks %}
 
+{% block authLinks %}
+        {% if session.username %}
+        <a class="btn btn-outline-primary me-2" href="{{ url_for('auth.logout') }}">Logout</a>
+        {% else %}
+        <a class="btn btn-primary me-2" href="#join">Join us</a>
+        {% endif %}
+{% endblock authLinks %}
+
+
 {% block main %}
 <main>
 <div class="landing">
@@ -22,27 +31,89 @@
             <div class="col-12 text-center">
                 <h1 class="text-white">Welcome to SponcerLink!</h1>
                 <p class="lead text-white">The Ultimate Sponsorship Platform Connecting Influencers with Brands</p>
-                <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Join Now</a>
+                <a href="#join" class="btn btn-primary btn-lg">Join Now</a>
             </div>
         </div>
     </div>
 </div>
 
-<div id="join">
-    <div class="join-block d-flex justify-content-evenly">
-        <!-- sponcer card -->
-        <div class="card">
-            Sponcer
+{% if not session.username %}
+<div id="join" style="height: 80vh;">
+    <h1 class="text-center my-5">Join Us</h1>
+    <div class="join-block d-flex justify-content-evenly py-3">
+       <div class="w-50 text-center">
+        <img style="height: 200px;" class="d-block rounded mx-auto" src="{{ url_for('static', filename='images/svgs/sponcer_illus.svg') }}" alt="">
+
+            <h1 class="my-2">Sponcer</h1>
+            <p>
+                Engage customers join now !!!
+            </p>
+            <div class="d-grid gap-2 col-6 mx-auto my-5">
+                <a class="btn btn-primary" href="{{ url_for('auth.login', usertype='sponcer') }}">Login</a>
+                <a class="btn btn-primary" href="{{ url_for('auth.register', usertype='sponcer') }}">Register</a>
+              </div>
+
         </div>
-        <div class="card">
-            Influencer
+        
+        <div class="w-50 text-center">
+
+            <img style="height: 200px;" class="d-block rounded mx-auto" src="{{ url_for('static', filename='images/svgs/influencer_illus.svg') }}" alt="">
+
+            <h1 class="my-2">Influencer</h1>
+            <p>
+                Influence and Get paid.
+            </p>
+            <div class="d-grid gap-2 col-6 mx-auto my-5">
+                <a class="btn btn-primary" href="{{ url_for('auth.login', usertype='influencer') }}">Login</a>
+                <a class="btn btn-primary" href="{{ url_for('auth.register', usertype='influencer') }}">Register</a>
+              </div>
         </div>
         
     </div>
 </div>
+<hr>
+{% endif %}
 
-<div id="about">
-    <h1 class="text-center">About</h1>
+
+<div id="about" class="text-center py-5">
+    <h1 class="my-5">About</h1>
+<div class="d-flex justify-content-evenly">
+    <img style="height: 300px;" class="float-start" src="{{ url_for('static', filename='images/svgs/about.svg') }}" alt="">
+    
+    <div>
+        <p class="text-wrap mx-auto" style="width: 30rem;">
+            It's a platform to connect Sponsors and Influencers so that sponsors can get their product/service advertised and influencers can get monetary benefit.
+        </p>
+    </div>
 </div>
+</div>
+
+<hr>
+
+<div id="contact" class="text-left mx-5">
+    <h1>Contact</h1>
+
+    <img style="height: 200px;" class="rounded float-end mx-5" src="{{ url_for('static', filename='images/svgs/contact.svg') }}" alt="contact illustration">
+
+    <section>
+        <ul class="contact-info">
+            <li><strong>Address:</strong> 123 Demo Street, Suite 456, Demo City, DM 78901, DemoLand</li>
+            <li><strong>Phone:</strong> +1 (800) 123-4567</li>
+            <li><strong>Email:</strong> <a href="mailto:info@democompany.com">info@sponcerlink.com</a></li>
+            <li><strong>Fax:</strong> +1 (800) 123-4568</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Follow Us</h2>
+        <ul class="contact-info">
+            <li><strong>Facebook:</strong> <a href="https://facebook.com/democompany" target="_blank">facebook.com/sponcerlink</a></li>
+            <li><strong>Twitter:</strong> <a href="https://twitter.com/democompany" target="_blank">twitter.com/sponcerlink</a></li>
+            <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/company/democompany" target="_blank">linkedin.com/company/sponcerlink</a></li>
+        </ul>
+    </section>
+</div>
+
+<hr>
+
 </main>
 {% endblock main %}

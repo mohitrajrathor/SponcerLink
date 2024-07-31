@@ -74,8 +74,8 @@
         {% if session.username %}
         <a class="btn btn-outline-primary me-2" href="{{ url_for('auth.logout') }}">Logout</a>
         {% else %}
-        <a class="btn btn-outline-primary me-2" href="{{ url_for('auth.login') }}">Login</a>
-        <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Register</a>
+        <a class="btn btn-outline-primary me-2" href="{{ url_for('auth.login', usertype='sponcer') }}">Login</a>
+        <a class="btn btn-primary" href="{{ url_for('auth.register', usertype='sponcer') }}">Register</a>
         {% endif %}
       {% endblock authLinks %}
     </div>
@@ -85,7 +85,7 @@
      {% with messages = get_flashed_messages() %}
       {% if messages %}
         {% for message in messages %}
-          <div class="alert alert-alert">
+          <div class="alert text-center alert-alert">
             {{ message }}
           </div>
         {% endfor %}

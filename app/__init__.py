@@ -22,9 +22,11 @@ def create_app():
     print("database initialized")
 
     # registering auth.auth_ blueprint to the app
-    from .routes import auth, admin
+    from .routes import auth, admin, sponcer
     app.register_blueprint(auth.auth_)
     app.register_blueprint(admin.admin)
+    app.register_blueprint(sponcer.sponcer)
+    
 
 
     # a simple page to check server status
