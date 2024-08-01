@@ -3,8 +3,10 @@ from flask import Flask
 from flask import render_template
 import datetime as dt
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 def create_app():
     # create and configure the app
@@ -13,7 +15,10 @@ def create_app():
     app.config['SECRET_KEY'] = 'dev'
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite3"
 
+    # initialization 
     db.init_app(app)
+    migrate.init_app(app, db)
+
 
     with app.app_context():
         from .models import Admins #, Industries, Influencers, Sponcers, SocialAccounts, SocialPlatforms, SponcershipRequests, AdRequests, Campaigns, Categories

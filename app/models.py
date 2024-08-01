@@ -31,6 +31,7 @@ class Sponcers(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     website = db.Column(db.String)
     password = db.Column(db.String, nullable=False)
+    balance = db.Column(db.Integer, default=0, nullable=False)
     joined_time = db.Column(db.String, nullable=False)
     update_time = db.Column(db.String)
 
@@ -46,8 +47,10 @@ class Influencers(db.Model):
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
+    balance = db.Column(db.Integer, default=0, nullable=False)
     joined_time = db.Column(db.String, nullable=False)
     update_time = db.Column(db.String)
 
     def __repr__(self) -> str:
         return f"<Sponcer {self.username}>"
+    
