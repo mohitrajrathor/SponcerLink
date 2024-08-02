@@ -31,7 +31,7 @@ class Sponcers(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     website = db.Column(db.String)
     password = db.Column(db.String, nullable=False)
-    balance = db.Column(db.Integer, default=0, nullable=False)
+    balance = db.Column(db.Integer, default=0)
     joined_time = db.Column(db.String, nullable=False)
     update_time = db.Column(db.String)
 
