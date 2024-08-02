@@ -47,10 +47,26 @@ class Influencers(db.Model):
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
-    balance = db.Column(db.Integer, default=0, nullable=False)
+    balance = db.Column(db.Integer, default=0)
     joined_time = db.Column(db.String, nullable=False)
     update_time = db.Column(db.String)
 
     def __repr__(self) -> str:
         return f"<Sponcer {self.username}>"
     
+class Campaigns(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    spo_id = db.Column(db.Integer, db.ForeignKey('sponcers.id'), nullable=False)
+    title = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=False)
+    budget = db.Column(db.Integer, nullable=False, default=0)
+    niches = db.relationship('Niches', backref='campaigns', lazy=True)
+    start_date = db.Column(db.String, nullable=False)
+    end_date = db.Column(db.String, nullable=False)
+    status = db.Column(db.String, default='pending', nullable=False)
+
+class Niches(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String, nullable=False)
+    description = db.Column(db.String)
+    camp_id = db.Column(db.Integer, db.ForeignKey('campaigns.id'))

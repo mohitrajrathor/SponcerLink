@@ -21,7 +21,7 @@ def create_app():
 
 
     with app.app_context():
-        from .models import Admins #, Industries, Influencers, Sponcers, SocialAccounts, SocialPlatforms, SponcershipRequests, AdRequests, Campaigns, Categories
+        from .models import Admins, Industries, Influencers, Sponcers, Campaigns, Niches
         db.create_all()
 
     print("database initialized")

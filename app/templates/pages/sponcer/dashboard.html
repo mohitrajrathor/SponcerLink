@@ -1,13 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sponcer - dashboard</title>
-</head>
-<body>
-<h1>
-    this is sponcer dashboard
-</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Sponcer</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container d-flex justify-content-between">
+        <div class="logo navbar-brand">
+          <a href="{{ url_for('sponcer.dashboard', username='mohit') }}"
+            ><span class="fs-3 fw-bold">Sponcer</span></a
+          >
+        </div>
+        <div class="navlinks">
+          <ul class="navbar-nav">
+            {% block navlinks %}
+              <li class="nav-item">
+                <a class="nav-link active" href="#profile">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Campaigns</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Find</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Statistics</a>
+              </li>
+            {% endblock navlinks %}
+          </ul>
+        </div>
+        <div class="authlinks">
+          <a class="btn btn-outline-primary" href="">Logout</a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="main" class="container">
+      <!-- profile -->
+      <div id="profile" style="min-height: 300px;">
+        <div class="text-center py-3">
+          <span class="fst-italic">Member since {{ join_date or 'Aug 02, 2024'}}</span>
+        </div>
+        <div class="py-3 d-flex justify-content-between">
+          <div class="mx-3">
+            <h1>
+              {{ name or 'Demo Name' }} 
+            </h1>
+            <h6>
+              {{ username or 'Username' }}
+            </h6>
+          </div>
+          <div>
+            <h6>Balance</h6>
+            <p>
+              <span class="fs-1 fw-bold">{{balance or '1000'}}</span> <span class="fs-3 fst-italic">Rs.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- scripts section -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      var triggerEl = document.querySelector("#navId a");
+      bootstrap.Tab.getInstance(triggerEl).show(); // Select tab by name
+    </script>
+  </body>
 </html>

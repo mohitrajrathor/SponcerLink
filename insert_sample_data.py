@@ -26,19 +26,22 @@ industries = [
 ]
 
 # list of sponcers for demo purpose
-joined_time = str(dt.datetime.now().timestamp())
-
 sponcers = [
-    ('raj', 'raj sahu', None, 1, 'raj@abc.com', None, generate_password_hash('123456789'), joined_time),
-    ('akash', 'akash', None, 1, 'akash@abc.com', None, generate_password_hash('10101010'), joined_time),
-    ('rohan', 'rohan', 'Agrotech', 5, 'rohan@agrotech.com', 'agrotech.com', generate_password_hash('abc'), joined_time),
-    ('tripti', 'tripti', 'beatutify', 2, 'tripti@beautify.com', 'beautify.com', generate_password_hash('xyz'), joined_time)
+    ('sponcer', 'sponcer', None, 1, 'sponcer@sponcer.com', None,  generate_password_hash('1'), dt.datetime.now().isoformat(), 0),
+    ('raj', 'raj sahu', None, 1, 'raj@abc.com', None, generate_password_hash('123456789'), dt.datetime.now().isoformat(), 0),
+    ('akash', 'akash', None, 1, 'akash@abc.com', None, generate_password_hash('10101010'), dt.datetime.now().isoformat(), 0),
+    ('rohan', 'rohan', 'Agrotech', 5, 'rohan@agrotech.com', 'agrotech.com', generate_password_hash('abc'), dt.datetime.now().isoformat(), 0),
+    ('tripti', 'tripti', 'beatutify', 2, 'tripti@beautify.com', 'beautify.com', generate_password_hash('xyz'), dt.datetime.now().isoformat(), 0)
 ]
 
 
 # list of influecners for demo purpose
-influecers = [
-    ('')
+influencers = [
+    (1, 'ajayr', 'Ajay Rao', 'ajayrao@example.com', generate_password_hash('password123'), 100, dt.datetime.now().isoformat(), None),
+    (2, 'sunitap', 'Sunita Patel', 'sunitapatel@example.com', generate_password_hash('password456'), 200, dt.datetime.now().isoformat(), None),
+    (3, 'rohitk', 'Rohit Kumar', 'rohitkumar@example.com', generate_password_hash('password789'), 300, dt.datetime.now().isoformat(), None),
+    (4, 'priyap', 'Priya Sharma', 'priyasharma@example.com', generate_password_hash('password012'), 400, dt.datetime.now().isoformat(), None),
+    (5, 'vikasp', 'Vikas Singh', 'vikassingh@example.com', generate_password_hash('password345'), 500, dt.datetime.now().isoformat(), None),
 ]
 
 path = os.path.join("instance", 'db.sqlite3')
@@ -47,22 +50,19 @@ path = os.path.join("instance", 'db.sqlite3')
 conn = sqlite3.connect(path)
 cursor = conn.cursor()
 
-# Create industries table if not exists
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS industries (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT NOT NULL
-    )
-''')
-
 
 # insert data into sponcer table
 cursor.executemany('''
-    INSERT INTO sponcers (username, name, company, ind_id, email, website, password, joined_time)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO sponcers (username, name, company, ind_id, email, website, password, joined_time, balance)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 ''', sponcers)
 
+
+# insert into influencer
+cursor.executemany("""
+    INSERT INTO influencers (id, username, name, email, password, balance, joined_time, update_time)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+""", influencers)
 
 
 # Insert data into the industries table
@@ -77,4 +77,3 @@ conn.commit()
 conn.close()
 
 print("Data has been successfully inserted into the industries table.")
-

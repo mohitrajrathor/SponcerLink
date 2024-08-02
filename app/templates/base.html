@@ -72,7 +72,7 @@
     <div class="d-flex navbar-end">
       {% block authLinks %}
         {% if session.username %}
-        <a class="btn btn-outline-primary me-2" href="{{ url_for('auth.logout') }}">Logout</a>
+        <a class="btn btn-outline-danger me-2" href="{{ url_for('auth.logout') }}">Logout</a>
         {% else %}
         <a class="btn btn-outline-primary me-2" href="{{ url_for('auth.login', usertype='sponcer') }}">Login</a>
         <a class="btn btn-primary" href="{{ url_for('auth.register', usertype='sponcer') }}">Register</a>
@@ -85,7 +85,7 @@
      {% with messages = get_flashed_messages() %}
       {% if messages %}
         {% for message in messages %}
-          <div class="alert text-center alert-alert">
+          <div class="alert alert-danger test-center" role="alert">
             {{ message }}
           </div>
         {% endfor %}
