@@ -6,3 +6,4 @@ from flask import Blueprint
 
 api = Blueprint('api', __name__, url_prefix=f'/api/v{__version__}')
 
+from . import sponcer, influencer, campaign, ad, admin

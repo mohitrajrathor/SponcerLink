@@ -10,27 +10,6 @@ import datetime as dt
 auth_ = Blueprint("auth", __name__, url_prefix='/auth')
 
 
-# handling login requirement at different level
-def specific_login_required(usertype=None):
-    def login_required(view):
-        @functools.wraps(view)
-        def wrapped_view(**kwargs):
-            if usertype is None:
-                flash("Session expired, please login again.")
-                return redirect(url_for('auth.login'))
-            
-            if 'usertype' not in session:
-                flash("Please login.")
-                return redirect(url_for('auth.login'))
-            
-            elif session['usertype'] != usertype:
-                flash("Access Prohabited! Reason : <strong>Wrong user</strong>")
-                return redirect(url_for("home"))
-
-            return view(**kwargs)
-        return wrapped_view
-    return login_required
-
 # registration 
 @auth_.route('/register/<usertype>', methods=['GET', 'POST'])
 def register(usertype):
@@ -162,4 +141,3 @@ def logout():
     session.pop('username')
     session.pop('usertype')
     return redirect(url_for("home"))
-
