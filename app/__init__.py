@@ -1,6 +1,5 @@
 from flask import Flask
 from flask import render_template
-import datetime as dt
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
