@@ -1,11 +1,30 @@
+from functools import wraps
 from flask import Flask
-from flask import Blueprint, session, url_for, redirect, render_template
+from flask import Blueprint, session, url_for, redirect, render_template, request, flash
 from .auth import specific_login_required
 
 
 sponcer = Blueprint('sponcer', __name__, url_prefix='/sponcer')
 
 
-@sponcer.route('<string:username>/dashboard', methods=['GET'])
+# decorators for handling auth and usertype 
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in session:
+            flash('You need to log in first.')
+            return redirect(url_for('auth.login', usertype='sponcer', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+# this page is same as profile page
+@sponcer.route('<string:username>/dashboard')
 def dashboard(username):
-    return render_template('pages/sponcer/dashboard.html')
+    return render_template('pages/sponcer/dashboard.html', username=username)
+
+@sponcer.route('<string:username>/dashboard/campaigns')
+# @login_required
+def campaigns(username):
+    return render_template('pages/sponcer/campaigns.html')
