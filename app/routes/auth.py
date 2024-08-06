@@ -1,4 +1,3 @@
-import functools
 import logging
 from flask import Blueprint, render_template, redirect, session, request, flash, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -141,3 +140,4 @@ def logout():
     session.pop('username')
     session.pop('usertype')
     return redirect(url_for("home"))
+

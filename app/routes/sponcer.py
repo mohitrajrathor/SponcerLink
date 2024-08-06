@@ -1,7 +1,5 @@
 from functools import wraps
-from flask import Flask
 from flask import Blueprint, session, url_for, redirect, render_template, request, flash
-from .auth import specific_login_required
 
 
 sponcer = Blueprint('sponcer', __name__, url_prefix='/sponcer')
@@ -40,3 +38,4 @@ def statistics(username):
     return render_template('pages/sponcer/statistics.html', username=username)
     
 
+ 
