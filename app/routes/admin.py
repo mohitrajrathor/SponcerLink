@@ -1,5 +1,4 @@
 from flask import render_template, redirect, request, session, url_for, Blueprint, flash
-from .auth import specific_login_required
 from ..models import Admins
 from .. import db
 
@@ -37,7 +36,6 @@ def login():
     return render_template('pages/admin/login.html')
 
 # dashboard 
-@specific_login_required(usertype="admin")
 @admin.route("/<username>")
 @admin.route("/<username>/dashboard", methods=["GET"])
 def dashboard(username):
