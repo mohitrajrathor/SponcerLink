@@ -1,7 +1,7 @@
-{% extends 'pages/sponcer/dashboard.html' %} {% block navlinks %}
+{% extends 'pages/sponcer/base.html' %} {% block navlinks %}
 <li class="nav-item">
   <a
-    class="nav-link active"
+    class="nav-link"
     href="{{ url_for('sponcer.dashboard', username=username) }}"
     >Profile</a
   >
@@ -26,3 +26,9 @@
   >
 </li>
 {% endblock navlinks %}
+
+
+
+{% block main %}
+  <h1 class="text-center">Find</h1>
+{% endblock main %}

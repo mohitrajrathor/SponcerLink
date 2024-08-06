@@ -27,16 +27,16 @@ def dashboard(username):
 @sponcer.route('<string:username>/dashboard/campaigns')
 # @login_required
 def campaigns(username):
-    return render_template('pages/sponcer/campaigns.html')
+    return render_template('pages/sponcer/campaigns.html', username=username)
 
 
 @sponcer.route('<string:username>/dashboard/find')
 def find(username):
-    return render_template('pages/sponcer/campaigns.html')
+    return render_template('pages/sponcer/find.html', username=username)
     
 
 @sponcer.route('<string:username>/dashboard/statistics')
 def statistics(username):
-    return render_template('pages/sponcer/campaigns.html')
+    return render_template('pages/sponcer/statistics.html', username=username)
     
 

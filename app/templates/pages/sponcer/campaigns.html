@@ -1,1 +1,35 @@
-{% extends 'pages/sponcer/dashboard.html' %}
+{% extends 'pages/sponcer/base.html' %}
+
+{% block navlinks %}
+<li class="nav-item">
+  <a
+    class="nav-link"
+    href="{{ url_for('sponcer.dashboard', username=username) }}"
+    >Profile</a
+  >
+</li>
+<li class="nav-item">
+  <a
+    class="nav-link active"
+    href="{{ url_for('sponcer.campaigns', username=username) }}"
+    >Campaigns</a
+  >
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url_for('sponcer.find', username=username) }}"
+    >Find</a
+  >
+</li>
+<li class="nav-item">
+  <a
+    class="nav-link"
+    href="{{ url_for('sponcer.statistics', username=username) }}"
+    >Statistics</a
+  >
+</li>
+{% endblock navlinks %}
+
+
+{% block main %}
+  <h1>Campaigns</h1>
+{% endblock main %}
