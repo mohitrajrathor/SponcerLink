@@ -30,5 +30,20 @@
 
 
 {% block main %}
-  <h1 class="text-center">Find</h1>
+  <div id="main">
+    <div id="find" class="mt-5">
+      <h1 class="text-center">Search</h1>
+      <div class="container mt-5 d-flex justify-content-center">
+        <div class="input-group" style="max-width: 800px;">
+            <div class="input-group-prepend py-1">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+            </div>
+            <input type="text" class="form-control py-1 mx-3" placeholder="Search for campaigns">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </div>
+
+
+    
+  </div>
 {% endblock main %}

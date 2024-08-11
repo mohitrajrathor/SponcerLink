@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - Sponcer</title>
+    <title>Dashboard - influencer</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -18,7 +18,7 @@
     <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container d-flex justify-content-between">
         <div class="logo navbar-brand">
-          <a class="text-decoration-none" href="{{ url_for('sponcer.dashboard', username=session['username']) }}"
+          <a class="text-decoration-none" href="{{ url_for('influencer.dashboard', username=session['username']) }}"
             ><span class="fs-4">Sponcer Dashboard</span></a
           >
         </div>
@@ -26,16 +26,16 @@
           <ul class="navbar-nav">
             {% block navlinks %}
               <li class="nav-item">
-                <a class="nav-link active" href="{{ url_for('sponcer.dashboard', username=username) }}">Profile</a>
+                <a class="nav-link active" href="{{ url_for('influencer.dashboard', username=username) }}">Profile</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('sponcer.campaigns', username=username) }}">Campaigns</a>
+                <a class="nav-link" href="{{ url_for('influencer.campaigns', username=username) }}">Campaigns</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('sponcer.find', username=username) }}">Find</a>
+                <a class="nav-link" href="{{ url_for('influencer.find', username=username) }}">Find</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('sponcer.statistics', username=username) }}">Statistics</a>
+                <a class="nav-link" href="{{ url_for('influencer.statistics', username=username) }}">Statistics</a>
               </li>
             {% endblock navlinks %}
           </ul>
@@ -58,29 +58,7 @@
       
     {% endblock main %}
 
-    <!-- store data from session -->
-    {% if 'id' in session %}
-    <div
-    id="data" 
-    data-id="{{session['id']}}"
-    data-username="{{session['username']}}"
-    data-usertype="{{session['usertype']}}"
-    ></div>
-    {% else %}
-    <div
-    id="data" 
-    data-id="0"
-    data-username="0"
-    data-usertype="0"
-    ></div>
-    {% endif %}
 
-
-
-    <!-- scripts section -->
-    {% block scripts %}
-      
-    {% endblock scripts %}
 
 
     <!-- scripts section -->
@@ -89,11 +67,8 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="{{ url_for('static', filename='js/sponcer.js') }}"></script>
-    <script>
-      var triggerEl = document.querySelector("#navId a");
-      bootstrap.Tab.getInstance(triggerEl).show(); // Select tab by name
-    </script>
+    <script src="{{ url_for('static', filename='js/influencer.js') }}"></script>
+    
   </body>
 </html>
  

@@ -1,0 +1,80 @@
+<!-- template for dashboard macros -->
+
+<!-- campaign block -->
+{% macro campaignBlock(campaigns) %}
+<div class="d-flex my-3 row column-gap-5 row-gap-3">
+  {% if campaigns|length > 0 %}
+   {% for campaign in campaigns %}
+  <div class="card col-6" style="max-width: 18rem">
+    <img
+      src="{{url_for('static', filename='images/svgs/camp-card.svg')}}"
+      class="card-img-top"
+      alt="camp-illustration"
+      style="max-height: 150px; margin: 20px 20px 20px 0"
+    />
+    <div class="card-body">
+      <p class="text-secondary fs-6">{{ campaign.post_time }}</p>
+      <h5 class="card-title">{{ campaign.title }}</h5>
+      <p class="card-text">{{ campaign.description }}</p>
+      <a href="#" class="btn btn-primary">View</a>
+    </div>
+  </div>
+
+  {% endfor %}
+  <!-- extra card for going to load more campaigns -->
+  <div class="card col-6" style="max-width: 18rem">
+    <div class="card-body">
+      <p>showing only recent 5 Campaigns</p>
+      <a href="#" class="btn btn-primary">Load More Campaigns</a>
+    </div>
+  </div>
+
+  {% else %}
+
+  <h3 class="text-center text-warning">No Campaigns Found</h3>
+  <div class="d-flex justify-content-center">
+    <a
+      href="{{ url_for('sponcer.campaigns', username=username) }}"
+      class="btn btn-primary"
+      >Create One</a
+    >
+  </div>
+
+  {% endif %}
+</div>
+{% endmacro %}
+
+
+{% macro addRequestsBlock(adRequests) %}
+<div class="mx-5">
+    {% if adRequests|length > 0 %}
+    {% for req in adRequests %}
+     
+      <!-- requests view -->
+      <div class="border border-2 p-3" style="width: fit-content; min-width: 800px;">
+        <div>
+          <h4><span class="fs-6 fst-italic text-secondary">Request ID: </span>{{ req.id }}</h4>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div>
+            <p><span class="fs-6 fst-italic text-secondary">Campaign </span></p>
+            <p class="fs-5">{{ req.campaign.title }}</p>
+          </div>
+          <div>
+            <p><span class="fs-6 fst-italic text-secondary">Influencer</span></p>
+            <p class="fs-5">{{ req.influencer.name }}</p>
+          </div>
+        </div>
+        <div >
+          <h5>Reqirements</h5>
+          <p>{{ req.requirements }}</p>
+        </div>
+      </div>
+
+    {% endfor %} 
+
+    {% else %}
+    <h3 class="text-center text-warning">No Requests yet</h3>
+    {% endif %}
+  </div>
+{% endmacro %}

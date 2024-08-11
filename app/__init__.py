@@ -1,10 +1,8 @@
 from flask import Flask
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 db = SQLAlchemy()
-migrate = Migrate()
 
 def create_app():
     # create and configure the app
@@ -15,7 +13,6 @@ def create_app():
 
     # initialization 
     db.init_app(app)
-    migrate.init_app(app, db)
 
 
     with app.app_context():
@@ -32,11 +29,13 @@ def create_app():
     app.register_blueprint(influencer.influencer)
 
     # registering api blueprint
-    from . import api
-    app.register_blueprint(api.api)
+    from .apis import transaction_apis
+    app.register_blueprint(transaction_apis.tranx, url_prefix='/api/transaction')
 
-    
 
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('pnf.html')
 
     # a simple page to check server status
     @app.route('/check')
@@ -47,6 +46,7 @@ def create_app():
     @app.route('/404')
     def _404():
         return render_template('pnf.html')
+    
 
     @app.route('/')
     def home():

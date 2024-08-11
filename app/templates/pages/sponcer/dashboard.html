@@ -1,4 +1,7 @@
-{% extends 'pages/sponcer/base.html' %}
+{% extends 'pages/sponcer/base.html' %} 
+{% from 'pages/sponcer/components/dashComps.html' import campaignBlock %}
+{% from 'pages/sponcer/components/dashComps.html' import addRequestsBlock %}
+
 
 {% block navlinks %}
 <li class="nav-item">
@@ -33,91 +36,144 @@
 
 {% block main %}
 <div id="main" class="container-xl">
-    <!-- profile -->
-    <div id="profile" style="min-height: 300px;">
-      <div class="text-center py-3">
-        <span class="fst-italic">Member since {{ join_date or 'Aug 02, 2024'}}</span>
+  <!-- profile -->
+  <div id="profile" style="min-height: 300px">
+    <div class="py-3 d-flex justify-content-between">
+      <div class="mx-3 px-5 py-5">
+        <h1 class="text-uppercase display-3">
+          <i class="bi bi-person"></i> {{ user.name or 'Demo Name' }}
+        </h1>
+        <hr />
+        <h2 class="text-lowercase text-center">
+          {{ user.username or 'Username' }}
+        </h2>
       </div>
-      <div class="py-3 d-flex justify-content-between">
-        <div class="mx-3">
-          <h1>
-            {{ name or 'Demo Name' }} 
-          </h1>
-          <h6>
-            {{ username or 'Username' }}
-          </h6>
-        </div>
-        <div class="text-center">
-          <h6>Wallet <i class="bi bi-wallet2"></i></h6>
-          <p>
-            <span class="fs-1 fw-bold">{{balance or '1000'}}</span> <span class="fs-3 fst-italic">Rs.</span>
-          </p>
-        </div>
-      </div>
-      <hr>
-      <div class="d-flex justify-content-between">
-        <span class="d-block fs-5 mx-5">{{ website or 'website.com' }}</span>
-        <span class="d-block fs-5 mx-5">{{ email or 'email@email.com'  }}</span>
-      </div>
-      <hr>
-      <div class="d-flex justify-content-between my-3">
-        <span class="d-block fs-5 mx-5">{{ comapny or 'Company is not known' }}</span>
-        <span class="d-block fs-5 mx-5">{{ industry or 'Industry' }}</span>
-      </div>
-    </div>
-
-    <div id="active-campaigns">
-      <h2 class="my-4">Active Campaigns</h2>
-      <div class="d-flex my-3 row column-gap-5 row-gap-3">
-
-        <div class="card col-6" style="max-width: 18rem;">
-          <img src="{{url_for('static', filename='images/svgs/camp-card.svg')}}" class="card-img-top" alt="camp-illustration" style="max-height:150px; margin: 20px 20px 20px 0;">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-
-      <!-- load more card -->
-        <div class="card col-6" style="max-width: 18rem;">
-          <div class="card-body">
-            <p>showing only recent 5 Campaigns</p>
-            <a href="#" class="btn btn-primary">Load More Campaigns</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    {% if 'username' in session %}
       
-    <div id="ad-reqests">
-      <h2 class="my-4">Ad - Requests</h2>
-      <div class="d-flex my-3 row column-gap-5 row-gap-3">
 
-        <div class="card col-6" style="max-width: 18rem;">
-          <img src="{{url_for('static', filename='images/svgs/camp-card.svg')}}" class="card-img-top" alt="camp-illustration" style="max-height:150px; margin: 20px 20px 20px 0;">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+
+      <!-- wallet -->
+      {% if 'id' in session and session['username'] == username %}
+      <div class="text-center mx-3 px-5 py-5 border border-warning">
+        <h3>Wallet <i class="bi bi-wallet2"></i></h3>
+        <p>
+          <span id="balance" class="fs-1 fw-bold">{{user.balance or '0'}}</span>
+          <span class="fs-3 fst-italic">Rs.</span>
+        </p>
+
+        <!-- add money model -->
+        <!-- Button trigger modal -->
+        <button
+          id="addMoneyBtn"
+          type="button"
+          class="btn btn-success"
+          data-bs-toggle="modal"
+          data-bs-target="#addMoney"
+          data-bs-id="{{ session['id'] }}"
+        >
+          Add Money
+        </button>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="addMoney"
+          tabindex="-1"
+          aria-labelledby="addMoneyLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addMoneyLabel">
+                  Add Money <i class="bi bi-cash-coin"></i>
+                </h1>
+                <button
+                  id="addMoneyCLoseBtn"
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id='addAmountForm'>
+                  <label for="amount" class="form-label">Amount</label>
+                  <input id="amt" type="text" class="form-control" placeholder="Enter Amount in Rs.">
+                  <label for="upi" class="form-label">Enter UPI Id</label>
+                  <input id="upi-id" type="text" class="form-control" placeholder="example 999900xxxx@xxx">
+                </form>
+
+                <!-- to display error or information -->
+                <div id="money-message"></div>    
+
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button id="make-transaction"  form="addAmountForm" type="submit" class="btn btn-primary">
+                  Make transaction
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-
-      <!-- load more card -->
-        <div class="card col-6" style="max-width: 18rem;">
-          <div class="card-body">
-            <p>showing only recent 5 Campaigns</p>
-            <a href="#" class="btn btn-primary">Load More Campaigns</a>
-          </div>
-        </div>
-
+        <!-- add money model end -->
+        
       </div>
+      {% endif %}
+
     </div>
 
-    {% endif %}
+    <!-- joined date -->
+    <div class="text-center py-3">
+      <span class="fst-italic"
+        >Member since {{ joined_date or 'Aug 02, 2024'}}</span
+      >
+    </div>
 
+    <!-- profile details -->
+    <div class="py-3 px-3 border">
+      <div class="d-flex justify-content-between my-3">
+        <span class="d-block fs-5 mx-5"
+          ><i class="bi bi-browser-chrome"></i> {{ user.website or 'website is not mentioned'
+          }}</span
+        >
+        <span class="d-block fs-5 mx-5"
+          ><i class="bi bi-envelope-at"></i> {{ user.email or 'email@email.com'
+          }}</span
+        >
+      </div>
+      <hr />
+      <div class="d-flex justify-content-between my-3">
+        <span class="d-block fs-5 mx-5"
+          ><i class="bi bi-buildings-fill"></i> {{ user.company or 'Company is
+          not mentioned' }}</span
+        >
+        <span class="d-block fs-5 mx-5"
+          >{{ user.industries.title or 'Industry' }}</span
+        >
+      </div>
+    </div>
   </div>
 
+  <!-- campaigns showing block -->
+  <div id="active-campaigns">
+    <h2 class="my-4">Active Campaigns</h2>
+    {{ campaignBlock(campaigns) }}
+  </div>
+
+
+  <!-- ad requests show only if user is logged in -->
+  {% if 'username' in session and session['username'] == username %}
+  <div id="ad-reqests" class="my-5">
+    <h2 class="my-4">Ad - Requests</h2>
+    {{ addRequestsBlock(adRequests) }}
+  </div>
+  {% endif %}
+</div>
 {% endblock main %}
