@@ -1,4 +1,4 @@
-<!-- template for dashboard macros -->
+<!-- template for dashboard components macros -->
 
 <!-- campaign block -->
 {% macro campaignBlock(campaigns) %}
@@ -16,9 +16,94 @@
       <p class="text-secondary fs-6">{{ campaign.post_time }}</p>
       <h5 class="card-title">{{ campaign.title }}</h5>
       <p class="card-text">{{ campaign.description }}</p>
-      <a href="#" class="btn btn-primary">View</a>
+      <!-- Modal trigger button -->
+      <button
+        type="button"
+        class="btn btn-primary btn-lg"
+        data-bs-toggle="modal"
+        data-bs-target="#viewCampModal-{{campaign.id}}"
+      >
+        View
+      </button>
+      
+      <!-- Modal Body -->
+      <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+      <div
+        class="modal fade"
+        id="viewCampModal-{{campaign.id}}"
+        tabindex="-1"
+        data-bs-backdrop="sView
+        data-bs-keyboard="false"
+        
+        role="dialog"
+        aria-labelledby="modalTitleId"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+          role="document"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalTitleId">
+                {{ campaign.title }}
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              {% if campaign.status == "pending" %}
+              <p class="text-secondary fs-6 fw-bold">Status - {{ campaign.status }}</p>                
+              {% endif %}
+
+              {% if campaign.status == "active" %}  
+              <p class="text-success fs-6 fw-bold">Status - {{ campaign.status }}</p>
+              {% endif %}
+
+              {% if campaign.status == "completed" %}  
+              <p class="text-success fs-6 fw-bold">Status - {{ campaign.status }}</p>
+              {% endif %}
+
+
+              <p class="text-dark-emphasis fs-6">Post Date - {{ campaign.post_time }}</p>
+              <p>{{ campaign.description }}</p>
+              <p><span class="fs-6 fst-bold text-dark-emphasis">requirements</span> - {{ campaign.requirements }}</p>
+              <p><span class="fs-6 fst-bold text-dark-emphasis">budget</span> - {{ campaign.budget }}</p>
+              <p>
+                <span class="fs-6 fst-italic text-dark-emphasis">Form</span> - <span class="fst-bold">{{campaign.start_date}}</span> to
+                <span class="fst-bold">{{campaign.end_date}}</span>
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Optional: Place to the bottom of scripts -->
+      <script>
+        const myModal = new bootstrap.Modal(
+          document.getElementById("viewCampModal-{{campaign.id}}"),
+          options,
+          View)
+      </script>
+      
     </div>
   </div>
+
+  
+  
 
   {% endfor %}
   <!-- extra card for going to load more campaigns -->
@@ -45,36 +130,21 @@
 {% endmacro %}
 
 
+<!-- add request block -->
 {% macro addRequestsBlock(adRequests) %}
 <div class="mx-5">
     {% if adRequests|length > 0 %}
+    <div class="row row-col-2">
     {% for req in adRequests %}
-     
       <!-- requests view -->
       <div class="border border-2 p-3" style="width: fit-content; min-width: 800px;">
-        <div>
-          <h4><span class="fs-6 fst-italic text-secondary">Request ID: </span>{{ req.id }}</h4>
-        </div>
-        <div class="d-flex justify-content-between">
-          <div>
-            <p><span class="fs-6 fst-italic text-secondary">Campaign </span></p>
-            <p class="fs-5">{{ req.campaign.title }}</p>
-          </div>
-          <div>
-            <p><span class="fs-6 fst-italic text-secondary">Influencer</span></p>
-            <p class="fs-5">{{ req.influencer.name }}</p>
-          </div>
-        </div>
-        <div >
-          <h5>Reqirements</h5>
-          <p>{{ req.requirements }}</p>
-        </div>
+        
       </div>
 
     {% endfor %} 
-
+    </div>
     {% else %}
     <h3 class="text-center text-warning">No Requests yet</h3>
     {% endif %}
-  </div>
+</div>
 {% endmacro %}

@@ -33,6 +33,8 @@ def dashboard(username):
         if camps:
             for camp in camps:
                 camp.post_time = dt.datetime.fromisoformat(camp.post_time).strftime("%b %d, %Y")
+                camp.start_date = dt.datetime.fromisoformat(camp.start_date).strftime("%b %d, %Y")
+                camp.end_date = dt.datetime.fromisoformat(camp.end_date).strftime("%b %d, %Y")
 
         if reqs:
             for req in reqs:
