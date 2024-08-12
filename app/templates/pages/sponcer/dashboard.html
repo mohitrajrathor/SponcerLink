@@ -1,6 +1,8 @@
 {% extends 'pages/sponcer/base.html' %} 
 {% from 'pages/sponcer/components/dashComps.html' import campaignBlock %}
 {% from 'pages/sponcer/components/dashComps.html' import addRequestsBlock %}
+{% from 'pages/sponcer/components/dashComps.html' import proposalBlock %}
+
 
 
 {% block navlinks %}
@@ -175,5 +177,15 @@
     {{ addRequestsBlock(adRequests) }}
   </div>
   {% endif %}
+
+<!-- sponcership requesting proposal by influencer -->
+  {% if 'username' in session and session['username'] == username %}
+  <div id="influencer-proposal" class="my-5">
+    <h2 class="my-4">Influencer - Proposal</h2>
+    {{ proposalBlock(proposals) }}
+  </div>
+  {% endif %}
+
+  
 </div>
 {% endblock main %}

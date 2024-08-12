@@ -40,6 +40,7 @@ class Sponcers(db.Model):
     industries = db.relationship('Industries', backref=db.backref('sponcers', lazy=True))
     campaigns = db.relationship('Campaigns', backref='campaigns', lazy=True)
     requests =  db.relationship('AddRequests', backref='sponcers', lazy=True)
+    proposals = db.relationship('SponcerRequests', backref='sponcers', lazy=True, overlaps="sponcer_requests")
 
     def __repr__(self) -> str:
         return f"<Sponcer {self.username}>"
@@ -57,6 +58,7 @@ class Influencers(db.Model):
 
     niches = db.relationship('Niches', backref='influencers', lazy=True)
     requests = db.relationship('AddRequests', backref='influencers', lazy=True)
+    proposals = db.relationship('SponcerRequests', backref='influencers', lazy=True, overlaps="sponcer_requests")
 
     def __repr__(self) -> str:
         return f"<Sponcer username : {self.username}, id: {self.id}>"
@@ -73,6 +75,7 @@ class Campaigns(db.Model):
     status = db.Column(db.String, default='pending', nullable=False)
 
     requests = db.relationship('AddRequests', back_populates='campaign', lazy=True)
+    proposals = db.relationship('SponcerRequests', back_populates='campaign', lazy=True, overlaps="sponcer_requests")
     niches = db.relationship('Niches', backref='campaigns', lazy=True)
 
 
@@ -111,7 +114,7 @@ class AddRequests(db.Model):
     requirements = db.Column(db.String, nullable=False)
     message = db.Column(db.String)
     payment = db.Column(db.Integer, default=0, nullable=False)
-    status = db.Column(db.String, default='pending', nullable=False)        # can be 'accepted' or 'rejected' or 'pending' or 'canceled'
+    status = db.Column(db.String, default='pending', nullable=False)        # can be 'accepted' or 'rejected' or 'pending' or 'cancelled'
     req_time = db.Column(db.String, nullable=False)
 
 

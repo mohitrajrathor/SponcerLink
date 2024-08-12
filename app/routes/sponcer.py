@@ -28,6 +28,7 @@ def dashboard(username):
         # gathering campaigns info
         camps = user.campaigns
         reqs = user.requests
+        pros = user.proposals
 
         # convert camps post_time to date
         if camps:
@@ -39,6 +40,10 @@ def dashboard(username):
         if reqs:
             for req in reqs:
                 req.req_time = dt.datetime.fromisoformat(req.req_time).strftime("%b %d, %Y")
+
+        if pros:
+            for p in pros:
+                p.req_time = dt.datetime.fromisoformat(p.req_time).strftime("%b %d, %Y")
 
 
     except Exception as e:
@@ -52,7 +57,8 @@ def dashboard(username):
         'user' : user,
         'joined_date' : dt.datetime.fromisoformat(user.joined_time).strftime("%b %d, %Y"),
         'campaigns' : camps,
-        'adRequests' : reqs
+        'adRequests' : reqs,
+        'proposals' : pros
     }
 
     return render_template('pages/sponcer/dashboard.html', **params)

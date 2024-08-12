@@ -132,6 +132,8 @@
 
 
 
+
+<!-- Ad Request block -->
 <!-- macros for add requests block -->
 {% macro viewRequest(req) %}
   <!-- Modal trigger button -->
@@ -229,6 +231,121 @@
 {% endmacro %}
 
 
+<!-- macro for update request -->
+{% macro updateRequest(req) %}
+
+<button
+    type="button"
+    class="btn btn-success mx-1"
+    data-bs-toggle="modal"
+    data-bs-target="#reqUpdateModal"
+  >
+    Update
+  </button>
+  
+  <!-- Modal Body -->
+  <div
+    class="modal fade"
+    id="reqUpdateModal"
+    tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    
+    role="dialog"
+    aria-labelledby="modalTitleId"
+    aria-hidden="true"
+  >
+    <div
+      class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+      role="document"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">
+            Ad-Request ID - {{ req.id }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- update modal -->
+           <h6>
+            <span class="fw-bold">Campaign</span> - {{ req.campaign.title }}
+          </h6>
+           <form id="updateAdRequestForm-{{ req.id }}">
+             <div class="mb-3">
+               <label for="requirements" class="form-label">Requirements</label>
+               <textarea
+                 class="form-control"
+                 name="requirements"
+                 id="requirements"
+                 rows="3"
+                 required
+               >{{ req.requirements }}</textarea>
+             </div>
+             <div class="mb-3">
+               <label for="message" class="form-label">Message</label>
+               <textarea
+                 class="form-control"
+                 name="message"
+                 id="message"
+                 rows="3"
+                 required
+               >{{ req.message }}</textarea>
+             </div>
+             <div class="mb-3">
+               <label for="payment" class="form-label">Payment</label>
+               <input
+                 type="text"
+                 class="form-control"
+                 name="payment"
+                 id="payment"
+                 aria-describedby="textId"
+                 placeholder="Payment"
+                 required
+                 value="{{ req.payment }}"
+               />
+             </div>
+           </form>
+           
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            onclick="updateAdRequest({{ req.id }})"
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Optional: Place to the bottom of scripts -->
+  <script>
+    const reqUpdateModal = new bootstrap.Modal(
+      document.getElementById("reqUpdateModal"),
+      options,
+    );
+  </script>
+
+{% endmacro %}
+
+
+
 <!-- add request block -->
 {% macro addRequestsBlock(adRequests) %}
 <div class="mx-5 row row-col-2">
@@ -238,7 +355,7 @@
       <div class="border border-2 rounded border-black">
 
         {% if req.status == "cancelled" or req.status == "rejected" %}
-        <p class="text-danger text-center text-uppercase text-decoration-line-through fs-5">{{ req.status }}</p>
+        <p class="text-danger text-center text-uppercase text-decoration-line-through fw-bold fs-5">{{ req.status }}</p>
         {% endif %}
 
         <div class="d-flex justify-content-between">
@@ -247,8 +364,8 @@
         </div>
         <div class="d-flex justify-content-between py-3 ">
           <div class="d-flex justify-content-between">
-            <p class="text-primary mx-2">Campaign Name: {{ req.campaign.title }}</p>
-            <p class="text-warning mx-2">Influencer Name: {{ req.influencer.name }}</p>
+            <p class="text-primary fw-bold fs-6 mx-2">Campaign Name: {{ req.campaign.title }}</p>
+            <p class="text-warning fw-bold fs-6 mx-2">Influencer Name: {{ req.influencer.name }}</p>
           </div>
 
 
@@ -257,10 +374,7 @@
             
             {% if not req.status == "cancelled" %}
             <!-- update button -->
-            <button
-              class="btn btn-success mx-1">
-              Update
-            </button>
+            {{ updateRequest(req) }}
 
             <!-- cancel button -->
             <button
@@ -280,5 +394,166 @@
     {% else %}
     <h3 class="text-center text-warning">No Requests yet</h3>
     {% endif %}
+</div>
+{% endmacro %}
+
+
+
+
+
+<!-- proposal block -->
+
+{% macro viewProposal(pros) %}
+  <!-- Modal trigger button -->
+  <button
+    type="button"
+    class="btn btn-primary mx-1"
+    data-bs-toggle="modal"
+    data-bs-target="#proposalViewModal"
+  >
+    View
+  </button>
+  
+  <!-- Modal Body -->
+  <div
+    class="modal fade"
+    id="proposalViewModal"
+    tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    
+    role="dialog"
+    aria-labelledby="modalTitleId"
+    aria-hidden="true"
+  >
+    <div
+      class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+      role="document"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">
+            Proposal ID - {{ pros.id }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- view modal -->
+           <div class="d-flex justify-content-between">
+            <!-- status view -->
+             <p class="text-secondary">Request Date: {{ pros.req_time }}</p>
+              {% if pros.status == "pending" %}
+             <p class="btn btn-outline-warning">Status : {{ pros.status }}</p>
+              {% endif %}
+
+              {% if pros.status == "approved" or pros.status == "accepted" %}
+              <p class="btn btn-outline-success">Status : {{ pros.status }}</p>
+              {% endif %}
+
+              {% if pros.status == "rejected" %}
+              <p class="btn btn-outline-danger">Status : {{ pros.status }}</p>
+              {% endif %}
+
+            </div>
+           <p>
+            <span class="fw-bold">Campaign</span> - {{ pros.campaign.title }}
+          </p>
+           <p>
+            <span class="fw-bold">Message</span> - {{ pros.message }}
+           </p>
+           <p>
+            <span class="fw-bold">Payment</span> - <span class="text-danger">{{ pros.payment }}</span> Rs.
+           </p>
+
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Optional: Place to the bottom of scripts -->
+  <script>
+    const proposalViewModal = new bootstrap.Modal(
+      document.getElementById("proposalViewModal"),
+      options,
+    );
+  </script>
+  
+{% endmacro %}
+
+
+
+
+
+
+{% macro proposalBlock(proposals) %}
+<div class="mx-5 row row-col-2">
+  {% if proposals|length > 0 %}
+  {% for pros in proposals %}
+    <!-- requests view -->
+    <div class="border border-2 rounded border-black">
+
+      {% if pros.status == "cancelled" or pros.status == "rejected" %}
+      <p class="text-danger text-center text-uppercase text-decoration-line-through fw-bold fs-5">{{ pros.status }}</p>
+      {% endif %}
+
+      {% if pros.status == "accepted" %}
+      <p class="text-success text-center text-uppercase fw-bold fs-5">{{ pros.status }}</p>
+      {% endif %}
+
+      <div class="d-flex justify-content-between">
+        <p class="text-secondary">Request Date: {{ pros.req_time }}</p>
+        <p class="text-secondary">Request ID: {{ pros.id }}</p>
+      </div>
+      <div class="d-flex justify-content-between py-3 ">
+        <div class="d-flex justify-content-between">
+          <p class="text-primary fw-bold fs-6 mx-2">Campaign Name: {{ pros.campaign.title }}</p>
+          <p class="text-warning fw-bold fs-6 mx-2">Influencer Name: {{ pros.influencer.name }}</p>
+        </div>
+
+
+        <div class="d-flex justify-content-between">
+          {{ viewProposal(pros) }}
+          
+          {% if not (pros.status == "cancelled" or pros.status == "rejected" or pros.status == "accepted") %}
+          <!-- update button -->
+          <button
+          class="btn btn-success mx-1"
+          onclick="acceptProposal({{ pros.id }})"
+          >
+          Accept
+          </button>
+
+          <!-- cancel button -->
+          <button
+            class="btn btn-danger mx-1"
+            onclick="rejectProposal({{ pros.id }})"
+            >
+            Reject
+          </button>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+
+  {% endfor %} 
+
+  {% else %}
+  <h3 class="text-center text-danger">No Proposal yet</h3>
+  {% endif %}
 </div>
 {% endmacro %}

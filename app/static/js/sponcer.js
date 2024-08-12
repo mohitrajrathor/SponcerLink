@@ -95,3 +95,103 @@ function cancelAdRequest(id) {
     return
 
   }
+
+
+  // update ad request
+  function updateAdRequest(id) {
+    console.log('updating ad request with id', id)
+    
+    const updateForm = document.getElementById('updateAdRequestForm-'+id)
+
+    let formData = new FormData(updateForm)
+    const updateDate = {}
+
+    for (const [key, value] of formData) {
+      updateDate[key] = value
+    }
+
+    const url = `/api/request/updateAdRequest/${id}`
+  
+    // send request
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updateDate)
+    })
+    .then(response => {
+      console.log(response)
+      if (response.ok) {
+        return response.json()
+      }
+    })
+      .then(data => {
+        alert(data['message'])
+        location.reload()
+        return 
+      }).catch(error => {
+        alert(error)
+      })
+
+      return
+
+  }
+
+
+  // accept proposal request
+  function acceptProposal(id) {
+    console.log('accepting proposal with id', id)
+
+    const url = `/api/request/acceptProposal/${id}`
+    
+    // send request
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      console.log(response)
+      if (response.ok) {
+        return response.json()
+      }
+    })
+      .then(data => {
+        alert(data['message'])
+        location.reload()
+        return 
+      }).catch(error => {
+        alert(error)
+      })
+  }
+
+
+  // reject proposal request
+  function rejectProposal(id) {
+    console.log('rejecting proposal with id', id) 
+
+    const url = `/api/request/rejectProposal/${id}`
+
+    // send request
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      console.log(response)
+      if (response.ok) {
+        return response.json()
+      }
+    })
+      .then(data => {
+        alert(data['message'])
+        location.reload()
+        return 
+      }).catch(error => {
+        alert(error)
+      })
+  }

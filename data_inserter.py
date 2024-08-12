@@ -1,5 +1,5 @@
 from app import db
-from app.models import Admins, Industries, Sponcers, Influencers, Campaigns, Niches, Transactions, AddRequests
+from app.models import Admins, Industries, Sponcers, Influencers, Campaigns, Niches, Transactions, AddRequests, SponcerRequests
 from datetime import datetime
 from werkzeug.security import generate_password_hash
 
@@ -169,6 +169,29 @@ def insert_db(app, db):
         status="approved",
         req_time=str(datetime.now())
     )
+
+
+    # proposal request 
+    proposal_request1 = SponcerRequests(
+        inf_id=1,  # Influencer1
+        spo_id=1,  # Sponcer1
+        camp_id=1,  # Campaign1
+        message="I would like to sponsor this campaign",
+        payment=500,
+        req_time=str(datetime.now())
+    )
+
+    proposal_request2 = SponcerRequests(
+        inf_id=2,  # Influencer2
+        spo_id=2,  # Sponcer2
+        camp_id=2,  # Campaign2
+        message="I would like to sponsor this campaign, and do not want to pay",
+        payment=0,
+        req_time=str(datetime.now())
+    )
+
+
+    db.session.add_all([proposal_request1, proposal_request2])
 
     db.session.add_all([add_request1, add_request2])
 
