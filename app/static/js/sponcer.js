@@ -59,10 +59,39 @@ function addMoney() {
 
 }
 
-
-
 // add money to sponcer 
 const makeTransaction = document.getElementById('make-transaction')
 if (makeTransaction) {
   makeTransaction.addEventListener('click', addMoney)
 }
+
+
+// delete ad request
+function cancelAdRequest(id) {
+
+  console.log('deleting ad request with id', id)
+  const url = `/api/request/cancelAdRequest/${id}`
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    console.log(response)
+    if (response.ok) {
+      return response.json()
+    }
+  })
+    .then(data => {
+      alert(data['message'])
+      location.reload()
+      return 
+    }).catch(error => {
+      alert(error)
+    })
+
+    return
+
+  }

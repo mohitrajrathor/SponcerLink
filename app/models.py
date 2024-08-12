@@ -102,7 +102,7 @@ class Transactions(db.Model):
     
 class AddRequests(db.Model):
     '''
-    sponcer send request for adrequest to influencer
+    sponcer send request for ad-request to influencer
     '''
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     inf_id = db.Column(db.Integer, db.ForeignKey('influencers.id'), nullable=False)
@@ -111,7 +111,7 @@ class AddRequests(db.Model):
     requirements = db.Column(db.String, nullable=False)
     message = db.Column(db.String)
     payment = db.Column(db.Integer, default=0, nullable=False)
-    status = db.Column(db.String, default='pending', nullable=False)
+    status = db.Column(db.String, default='pending', nullable=False)        # can be 'accepted' or 'rejected' or 'pending' or 'canceled'
     req_time = db.Column(db.String, nullable=False)
 
 

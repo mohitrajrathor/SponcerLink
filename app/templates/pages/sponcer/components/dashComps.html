@@ -1,7 +1,7 @@
 <!-- template for dashboard components macros -->
 
 <!-- campaign block -->
-{% macro campaignBlock(campaigns) %}
+{% macro campaignBlock(campaigns, username) %}
 <div class="d-flex my-3 row column-gap-5 row-gap-3">
   {% if campaigns|length > 0 %}
    {% for campaign in campaigns %}
@@ -68,14 +68,13 @@
               <p class="text-success fs-6 fw-bold">Status - {{ campaign.status }}</p>
               {% endif %}
 
-
-              <p class="text-dark-emphasis fs-6">Post Date - {{ campaign.post_time }}</p>
-              <p>{{ campaign.description }}</p>
-              <p><span class="fs-6 fst-bold text-dark-emphasis">requirements</span> - {{ campaign.requirements }}</p>
-              <p><span class="fs-6 fst-bold text-dark-emphasis">budget</span> - {{ campaign.budget }}</p>
+              <p class="text-dark fs-6">Post Date - <span class="fw-bold">{{ campaign.post_time }}</span></p>
+              <p><span class="fs-6 fw-bold text-dark">description</span> - <span class="fw-bold text-warning">{{ campaign.description }}</span></p>
+              <p><span class="fs-6 fw-bold text-dark">requirements</span> - {{ campaign.requirements }}</p>
+              <p><span class="fs-6 fw-bold text-dark">budget</span> - <span class="text-primary">{{ campaign.budget }}</span> Rs.</p>
               <p>
-                <span class="fs-6 fst-italic text-dark-emphasis">Form</span> - <span class="fst-bold">{{campaign.start_date}}</span> to
-                <span class="fst-bold">{{campaign.end_date}}</span>
+                <span class="fs-6 fw-italic text-dark">Form</span> - <span class="fw-bold">{{campaign.start_date}}</span> to
+                <span class="fw-bold">{{campaign.end_date}}</span>
               </p>
             </div>
             <div class="modal-footer">
@@ -93,24 +92,26 @@
       
       <!-- Optional: Place to the bottom of scripts -->
       <script>
-        const myModal = new bootstrap.Modal(
+        const viewCampModal = new bootstrap.Modal(
           document.getElementById("viewCampModal-{{campaign.id}}"),
           options,
           View)
       </script>
       
     </div>
-  </div>
-
-  
-  
+  </div>  
 
   {% endfor %}
   <!-- extra card for going to load more campaigns -->
-  <div class="card col-6" style="max-width: 18rem">
-    <div class="card-body">
-      <p>showing only recent 5 Campaigns</p>
-      <a href="#" class="btn btn-primary">Load More Campaigns</a>
+
+  <div class="card" style="width: 18rem;">
+    <div class="card-body d-flex justify-content-center align-items-center">
+      <div>
+      <h5 class="card-title text-center">View More at Campaigns page</h5>
+        <div class="d-flex justify-content-center">
+          <a href="{{ url_for('sponcer.campaigns', username=username) }}" class="btn btn-primary">Go to Campaigns</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -130,19 +131,152 @@
 {% endmacro %}
 
 
+
+<!-- macros for add requests block -->
+{% macro viewRequest(req) %}
+  <!-- Modal trigger button -->
+  <button
+    type="button"
+    class="btn btn-primary mx-1"
+    data-bs-toggle="modal"
+    data-bs-target="#reqViewModal"
+  >
+    View
+  </button>
+  
+  <!-- Modal Body -->
+  <div
+    class="modal fade"
+    id="reqViewModal"
+    tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    
+    role="dialog"
+    aria-labelledby="modalTitleId"
+    aria-hidden="true"
+  >
+    <div
+      class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+      role="document"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">
+            Ad-Request ID - {{ req.id }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- view modal -->
+           <div class="d-flex justify-content-between">
+            <!-- status view -->
+             <p class="text-secondary">Request Date: {{ req.req_time }}</p>
+              {% if req.status == "pending" %}
+             <p class="btn btn-outline-warning">Status : {{ req.status }}</p>
+              {% endif %}
+
+              {% if req.status == "approved" or req.status == "accepted" %}
+              <p class="btn btn-outline-success">Status : {{ req.status }}</p>
+              {% endif %}
+
+              {% if req.status == "rejected" %}
+              <p class="btn btn-outline-danger">Status : {{ req.status }}</p>
+              {% endif %}
+
+            </div>
+           <p>
+            <span class="fw-bold">Campaign</span> - {{ req.campaign.title }}
+          </p>
+           <p>
+            <span class="fw-bold">Requirements</span> - {{ req.requirements }}
+           </p>
+           <p>
+            <span class="fw-bold">Message</span> - {{ req.message }}
+           </p>
+
+           <p>
+            <span class="fw-bold">Payment</span> - <span class="text-danger">{{ req.payment }}</span> Rs.
+           </p>
+
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Optional: Place to the bottom of scripts -->
+  <script>
+    const reqViewModal = new bootstrap.Modal(
+      document.getElementById("reqViewModal"),
+      options,
+    );
+  </script>
+  
+{% endmacro %}
+
+
 <!-- add request block -->
 {% macro addRequestsBlock(adRequests) %}
-<div class="mx-5">
+<div class="mx-5 row row-col-2">
     {% if adRequests|length > 0 %}
-    <div class="row row-col-2">
     {% for req in adRequests %}
       <!-- requests view -->
-      <div class="border border-2 p-3" style="width: fit-content; min-width: 800px;">
-        
+      <div class="border border-2 rounded border-black">
+
+        {% if req.status == "cancelled" or req.status == "rejected" %}
+        <p class="text-danger text-center text-uppercase text-decoration-line-through fs-5">{{ req.status }}</p>
+        {% endif %}
+
+        <div class="d-flex justify-content-between">
+          <p class="text-secondary">Request Date: {{ req.req_time }}</p>
+          <p class="text-secondary">Request ID: {{ req.id }}</p>
+        </div>
+        <div class="d-flex justify-content-between py-3 ">
+          <div class="d-flex justify-content-between">
+            <p class="text-primary mx-2">Campaign Name: {{ req.campaign.title }}</p>
+            <p class="text-warning mx-2">Influencer Name: {{ req.influencer.name }}</p>
+          </div>
+
+
+          <div class="d-flex justify-content-between">
+            {{ viewRequest(req) }}
+            
+            {% if not req.status == "cancelled" %}
+            <!-- update button -->
+            <button
+              class="btn btn-success mx-1">
+              Update
+            </button>
+
+            <!-- cancel button -->
+            <button
+              class="btn btn-danger mx-1"
+              onclick="cancelAdRequest({{ req.id }})"
+              >
+              Cancel
+            </button>
+            {% endif %}
+
+          </div>
+        </div>
       </div>
 
     {% endfor %} 
-    </div>
+
     {% else %}
     <h3 class="text-center text-warning">No Requests yet</h3>
     {% endif %}
