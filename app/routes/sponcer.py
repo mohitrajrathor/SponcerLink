@@ -56,7 +56,7 @@ def dashboard(username):
         'username' : username,
         'user' : user,
         'joined_date' : dt.datetime.fromisoformat(user.joined_time).strftime("%b %d, %Y"),
-        'campaigns' : camps,
+        'campaigns' : camps[:4],
         'adRequests' : reqs,
         'proposals' : pros
     }
@@ -67,7 +67,36 @@ def dashboard(username):
 @sponcer.route('<string:username>/dashboard/campaigns')
 @login_required
 def campaigns(username):
-    return render_template('pages/sponcer/campaigns.html', username=username)
+    try:
+        # retriving user info
+        user = Sponcers.query.filter_by(username=username).first()
+
+        # gathering campaigns info
+        camps = user.campaigns
+
+        # convert camps post_time to date
+        if camps:
+            for camp in camps:
+                camp.start_date = dt.datetime.fromisoformat(camp.start_date).strftime("%Y-%m-%d")
+                camp.end_date = dt.datetime.fromisoformat(camp.end_date).strftime("%Y-%m-%d")
+                camp.post_time = dt.datetime.fromisoformat(camp.post_time).strftime("%b %d, %Y")
+
+
+
+    except Exception as e:
+        logging.warning(f"error while retriving user info ERROR : {e}")
+        print(e)
+        return abort(404)
+
+    # managing parameter to be passed into template
+    params = {
+        'username' : username,
+        'user' : user,
+        'joined_date' : dt.datetime.fromisoformat(user.joined_time).strftime("%b %d, %Y"),
+        'campaigns' : camps
+    }
+
+    return render_template('pages/sponcer/campaigns.html', **params)
 
 
 @sponcer.route('<string:username>/dashboard/find')

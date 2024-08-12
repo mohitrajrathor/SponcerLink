@@ -1,20 +1,95 @@
 // sponcer.js to handle sponcer dashboard related fucntionality
 
-// fetch data from page
-const dataDiv = document.getElementById('data')
-const id = dataDiv.getAttribute('data-id')                  // user id
-const username = dataDiv.getAttribute('data-username')      // username
-const usertype = dataDiv.getAttribute('data-usertype')      // usertype
-// balance data
-const balance = document.getElementById('balance')
 
+// balance data
 console.log("sponcer.js working!")
+
+// temp function
+function tempCall() {
+  console.log("temp call")
+  return
+}
+
+// update campaign
+function updateCampaignFunc(id) {
+  console.log('updating campaign with id', id)
+
+  const updateForm = document.getElementById(`updateCampaignForm-${id}`)
+
+  let formData = new FormData(updateForm)
+  const updateDate = {}
+
+  for (const [key, value] of formData) {
+    updateDate[key] = value
+  }
+
+  const url = `/api/campaign/updateCampaign/${id}`
+
+  // send request
+  fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updateDate)
+  })
+  .then(response => {
+    console.log(response)
+    if (response.ok) {
+      return response.json()
+    }
+  })
+    .then(data => {
+      alert(data['message'])
+      location.reload()
+      return 
+    }).catch(error => {
+      alert(error)
+    })
+
+    return
+}
+
+
+// delete campaign
+function deleteCampaign(id) {
+  console.log('deleting campaign with id', id)
+
+  const url = `/api/campaign/deleteCampaign/${id}`
+
+  // send request
+  fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    console.log(response)
+    if (response.ok) {
+      return response.json()
+    }
+  })
+  .then(data => {
+    alert(data['message'])
+    location.reload()
+    return 
+  }).catch(error => {
+    alert(error)
+  })  
+
+  return
+
+}
+
 
 
 
 // function that tirgger when make-transaction btn got clicked
 function addMoney() {
   // get the data
+  const balance = document.getElementById('balance')
+
   const amount = document.getElementById('amt').value
   const upiId = document.getElementById('upi-id').value
   console.log(amount, upiId)
@@ -195,3 +270,51 @@ function cancelAdRequest(id) {
         alert(error)
       })
   }
+
+
+
+  // campaigns requests
+
+  // create campaigns
+  function createCampaign() {
+    console.log("creating campaign...")
+
+    // getting form data
+    const campForm = document.getElementById('CampaignForm')
+
+    let formData = new FormData(campForm)
+    const campData = {}
+
+    for (const [key, value] of formData) {
+      campData[key] = value
+    }
+
+    console.log(campData)
+
+    const url = `/api/campaign/createCampaign`
+
+    // send request
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(campData)
+    })
+    .then(response => {
+      console.log(response)
+      if (response.ok) {
+        return response.json()
+      }
+    })
+    .then(data => {
+      alert(data['message'])
+      location.reload()
+      return 
+    })
+    .catch(error => {
+      alert(error)
+    })
+  
+  }
+

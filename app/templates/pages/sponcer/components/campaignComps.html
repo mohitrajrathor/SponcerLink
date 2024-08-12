@@ -1,0 +1,140 @@
+<!-- template to create campaign components -->
+
+<!-- create campaign modal -->
+{% macro createCampaignModal() %}
+  <!-- Modal -->
+   <button
+    type="button"
+    class="btn btn-success"
+    data-bs-toggle="modal"
+    data-bs-target="#createCampaignModal"
+   >
+   <h1><i class="bi bi-file-earmark-plus-fill"></i></h1>
+   Create Campaign
+   </button>
+   
+   <!-- Modal Body -->
+   <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+   <div
+    class="modal fade"
+    id="createCampaignModal"
+    tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    
+    role="dialog"
+    aria-labelledby="modalTitleId"
+    aria-hidden="true"
+   >
+    <div
+        class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+        role="document"
+    >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">
+                    Create Campaigns
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <!-- form -->
+                 <form id="CampaignForm">
+                    <!-- create inputs for title, description, requirements, budget, start date, end date -->
+                     <label for="title" class="form-label">
+                         Title
+                     </label>
+                     <input
+                         type="text"
+                         class="form-control"
+                         name="title"
+                         id="title"
+                         required
+                     />
+
+                     <label for="description" class="form-label">
+                         Description
+                     </label>
+                     <input
+                         type="text"
+                         class="form-control"
+                         name="description"
+                         id="description"
+                         required
+                     />
+
+                     <label for="requirements" class="form-label">
+                         Requirements
+                     </label>
+                     <input
+                         type="text"
+                         class="form-control"
+                         name="requirements"
+                         id="requirements"
+                         required
+                     />
+
+                     <label for="budget" class="form-label">
+                         Budget
+                     </label>
+                     <input
+                         type="text"
+                         class="form-control"
+                         name="budget"
+                         id="budget"
+                         required
+                     />
+
+                     <label for="start_date" class="form-label">
+                         Start Date
+                     </label>
+                     <input
+                         type="date"
+                         class="form-control"
+                         name="start_date"
+                         id="start_date"
+                         required
+                     />
+
+                     <label for="end_date" class="form-label">
+                         End Date
+                     </label>
+                     <input
+                         type="date"
+                         class="form-control"
+                         name="end_date"
+                         id="end_date"
+                         required
+                     />
+                 </form>
+
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button onclick="createCampaign()" type="button" class="btn btn-success">Create</button>
+            </div>
+        </div>
+    </div>
+   </div>
+   
+   <!-- Optional: Place to the bottom of scripts -->
+   <script>
+    const createCampaignModal = new bootstrap.Modal(
+        document.getElementById("createCampaignModal"),
+        options,
+    );
+   </script>
+   
+{% endmacro %}
+

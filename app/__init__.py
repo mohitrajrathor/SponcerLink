@@ -29,9 +29,10 @@ def create_app():
     app.register_blueprint(influencer.influencer)
 
     # registering api blueprint
-    from .apis import transaction_apis, request
+    from .apis import transaction_apis, request, campaign
     app.register_blueprint(transaction_apis.tranx, url_prefix='/api/transaction')
     app.register_blueprint(request.request_api, url_prefix='/api/request')
+    app.register_blueprint(campaign.campaign_api, url_prefix='/api/campaign')
 
     @app.errorhandler(404)
     def page_not_found(e):

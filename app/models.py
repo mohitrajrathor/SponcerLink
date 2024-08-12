@@ -68,14 +68,15 @@ class Campaigns(db.Model):
     spo_id = db.Column(db.Integer, db.ForeignKey('sponcers.id'), nullable=False)
     title = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
+    requirements = db.Column(db.String, nullable=False)
     budget = db.Column(db.Integer, nullable=False, default=0)
     start_date = db.Column(db.String, nullable=False)
     end_date = db.Column(db.String, nullable=False)
     post_time = db.Column(db.String, nullable=False)
     status = db.Column(db.String, default='pending', nullable=False)
 
-    requests = db.relationship('AddRequests', back_populates='campaign', lazy=True)
-    proposals = db.relationship('SponcerRequests', back_populates='campaign', lazy=True, overlaps="sponcer_requests")
+    requests = db.relationship('AddRequests', back_populates='campaign', lazy=True, cascade="all, delete")
+    proposals = db.relationship('SponcerRequests', back_populates='campaign', lazy=True, overlaps="sponcer_requests", cascade="all, delete")
     niches = db.relationship('Niches', backref='campaigns', lazy=True)
 
 

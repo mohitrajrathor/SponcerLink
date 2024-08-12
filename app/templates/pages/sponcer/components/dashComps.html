@@ -1,7 +1,154 @@
 <!-- template for dashboard components macros -->
 
+
 <!-- campaign block -->
-{% macro campaignBlock(campaigns, username) %}
+
+{% macro updateCampaign(campaign) %}
+<button
+type="button"
+class="btn btn-success mx-1"
+data-bs-toggle="modal"
+data-bs-target="#updateCampaign-{{campaign.id}}"
+>
+Update
+</button>
+
+<!-- Modal Body -->
+<div
+class="modal fade"
+id="updateCampaign-{{campaign.id}}"
+tabindex="-1"
+data-bs-backdrop="static"
+data-bs-keyboard="false"
+
+role="dialog"
+aria-labelledby="modalTitleId"
+aria-hidden="true"
+>
+<div
+  class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+  role="document"
+>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="modalTitleId">
+        Campaign ID - {{ campaign.id }}
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form id="updateCampaignForm-{{campaign.id}}">
+        <!-- create inputs for title, description, requirements, budget, start date, end date -->
+         <label for="title" class="form-label">
+             Title
+         </label>
+         <input
+             type="text"
+             class="form-control"
+             name="title"
+             id="title"
+             value="{{ campaign.title }}"
+             required
+         />
+
+         <label for="description" class="form-label">
+             Description
+         </label>
+         <input
+             type="text"
+             class="form-control"
+             name="description"
+             id="description"
+             value="{{ campaign.description }}"
+             required
+         />
+
+         <label for="requirements" class="form-label">
+             Requirements
+         </label>
+         <input
+             type="text"
+             class="form-control"
+             name="requirements"
+             id="requirements"
+             value="{{ campaign.requirements }}"
+             required
+         />
+
+         <label for="budget" class="form-label">
+             Budget
+         </label>
+         <input
+             type="text"
+             class="form-control"
+             name="budget"
+             id="budget"
+             value="{{ campaign.budget }}"
+             required
+         />
+
+         <label for="start_date" class="form-label">
+             Start Date
+         </label>
+         <input
+             type="date"
+             class="form-control"
+             name="start_date"
+             id="start_date"
+             value="{{ campaign.start_date }}"
+             required
+         />
+
+         <label for="end_date" class="form-label">
+             End Date
+         </label>
+         <input
+             type="date"
+             class="form-control"
+             name="end_date"
+             id="end_date"
+             value="{{ campaign.end_date }}"
+             required
+         />
+      </form>
+       
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+      >
+        Close
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-dismiss="modal"
+        onclick="updateCampaignFunc({{ campaign.id }})"
+      >
+        Update
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Optional: Place to the bottom of scripts -->
+<script>
+const updateCampaign-{{campaign.id}}" = new bootstrap.Modal(
+  document.getElementById("updateCampaign-{{campaign.id}}""),
+  options,
+);
+</script>
+{% endmacro %}
+
+{% macro campaignBlock(campaigns, username, update=False) %}
 <div class="d-flex my-3 row column-gap-5 row-gap-3">
   {% if campaigns|length > 0 %}
    {% for campaign in campaigns %}
@@ -16,10 +163,11 @@
       <p class="text-secondary fs-6">{{ campaign.post_time }}</p>
       <h5 class="card-title">{{ campaign.title }}</h5>
       <p class="card-text">{{ campaign.description }}</p>
+      <!-- view modal -->
       <!-- Modal trigger button -->
       <button
         type="button"
-        class="btn btn-primary btn-lg"
+        class="btn btn-primary"
         data-bs-toggle="modal"
         data-bs-target="#viewCampModal-{{campaign.id}}"
       >
@@ -97,13 +245,28 @@
           options,
           View)
       </script>
-      
+      <!-- view modal end -->
+
+
+      {% if update == True %}
+      {{ updateCampaign(campaign) }}
+      {% endif %}
+
+
+      <!-- delete campaign -->
+      <button
+        class="btn btn-danger"
+        onclick="deleteCampaign({{campaign.id}})"
+      >
+      Delete
+      </button>
     </div>
   </div>  
 
   {% endfor %}
   <!-- extra card for going to load more campaigns -->
 
+  {% if not update == True %}
   <div class="card" style="width: 18rem;">
     <div class="card-body d-flex justify-content-center align-items-center">
       <div>
@@ -114,6 +277,9 @@
       </div>
     </div>
   </div>
+  {% endif %}
+
+
 
   {% else %}
 
@@ -399,8 +565,6 @@
 
 
 
-
-
 <!-- proposal block -->
 
 {% macro viewProposal(pros) %}
@@ -493,10 +657,6 @@
   </script>
   
 {% endmacro %}
-
-
-
-
 
 
 {% macro proposalBlock(proposals) %}

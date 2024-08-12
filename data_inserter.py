@@ -97,6 +97,7 @@ def insert_db(app, db):
         spo_id=1,  # Sponcer1
         title="Tech Launch Campaign",
         description="Launching a new tech product",
+        requirements="4 Posts, 2 Posts on Facebook, 1 Post on Twitter",
         budget=5000,
         start_date=str(datetime.now()),
         end_date=str(datetime.now()),
@@ -108,6 +109,7 @@ def insert_db(app, db):
         spo_id=2,  # Sponcer2
         title="Spring Fashion Collection",
         description="Promoting the new spring collection",
+        requirements = "5 Posts, 3 Posts on Facebook, 2 Posts on Twitter",
         budget=3000,
         start_date=str(datetime.now()),
         end_date=str(datetime.now()),
